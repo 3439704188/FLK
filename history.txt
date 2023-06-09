@@ -1,0 +1,20 @@
+  102  git add .
+  103  git commit -m "rmv"
+  104  checkout
+  105  branch
+  106  git reset --hard HEAD^
+  107  git reset --hard HEAD$
+  108  git reset --hard HEAD~1
+  109  git branch
+  110  git chectout
+  111  git checkout
+  112  git reflog
+  113  git remove src
+  114  git reset --hard 1771c29
+  115  git log > log.txt
+  116  history
+  117  history | grep 1__ > history.txt
+  118  history | tail -10 > history.txt
+  119  git checkout
+  120  git checkout history.txt
+  121  history | tail -20 > history.txt

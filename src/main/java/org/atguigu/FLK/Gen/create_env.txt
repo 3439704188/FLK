@@ -1,0 +1,21 @@
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment localEnv = StreamExecutionEnvironment.createLocalEnvironment();
+        StreamExecutionEnvironment remoteEnv = StreamExecutionEnvironment.createRemoteEnvironment(
+                "hadoop102",                   // JobManager主机名
+                1234,                     // JobManager进程端口号
+                "path/to/jarFile.jar"  // 提交给JobManager的JAR包
+        );
+        executionEnvironment.fromCollection(Arrays.asList(1,2,3,5));
+
+                DataStreamSource<String> hadoop102 = env.socketTextStream("hadoop102", 7777);
+                hadoop102.flatMap((FlatMapFunction<String, Tuple2<String, Integer>>) (s, collector) -> {
+                            String[] s1 = s.split(" ");
+                            for (String w : s1
+                            ) {
+                                collector.collect(Tuple2.of(w, 1));
+                            }
+                        }).returns(Types.TUPLE(Types.STRING, Types.INT))
+                        .keyBy(0)
+                        .sum(1)
+                        .print();
+                env.execute();
